@@ -6,6 +6,17 @@ namespace PictureCrop.Core
 {
     public static class NineGrid
     {
+        /// <summary>
+        /// 九切图片
+        /// </summary>
+        /// <param name="sourcePath">图片原始路径</param>
+        /// <param name="destPath">切图保存目标路径</param>
+        /// <param name="left">左上角保留宽度</param>
+        /// <param name="top">左上角保留高度</param>
+        /// <param name="right">右下角保留宽度</param>
+        /// <param name="bottom">右下角保留高度</param>
+        /// <param name="centerW">中心区域保留宽度</param>
+        /// <param name="centerH">中心区域保留高度</param>
         public static void Crop(string sourcePath, string destPath, int left, int top, int right, int bottom, int centerW, int centerH)
         {
             Bitmap source = null;
