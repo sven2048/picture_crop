@@ -90,6 +90,8 @@ function ExportArtLayers(artLayerList, hostDocRef, destFolder)
 			app.activeDocument = exportDocRef;
 			app.activeDocument.resizeCanvas(originalW, originalH, AnchorPosition.MIDDLECENTER);
 			var duplicatedLayer = app.activeDocument.paste(false);
+			duplicatedLayer.opacity = rasterizedLayer.opacity;
+			duplicatedLayer.fillOpacity = rasterizedLayer.fillOpacity;
 
 			//九切切图,修改
 			if(context.nineGridValid)

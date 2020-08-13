@@ -18,12 +18,16 @@ PhotoShopUtils.NineGridCrop = function(artLayer, docRef, leftPadding, topPadding
 		app.activeDocument = clipDocRef;
 		clipDocRef.resizeCanvas(width, height, AnchorPosition.MIDDLECENTER);
 		var duplicatedArtLayer = clipDocRef.paste();
+		duplicatedArtLayer.opacity = originalArtLayer.opacity;
+		duplicatedArtLayer.fillOpacity = originalArtLayer.fillOpacity;
 		clipDocRef.crop(sourceRect, 0);
 		clipDocRef.resizeImage(targetRect[2] - targetRect[0], targetRect[3] - targetRect[1], 72, ResampleMethod.NEARESTNEIGHBOR, 0);
 		duplicatedArtLayer.cut();
 	
 		app.activeDocument = hostDocRef;
 		var targetArtLayer = hostDocRef.paste();
+		targetArtLayer.opacity = duplicatedArtLayer.opacity;
+		targetArtLayer.fillOpacity = duplicatedArtLayer.fillOpacity;
 		targetArtLayer.name = newLayerName;
 		targetArtLayer.translate(targetRect[0] - targetArtLayer.bounds[0], targetRect[1] - targetArtLayer.bounds[1]);
 	}
