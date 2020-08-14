@@ -48,11 +48,11 @@ function Main()
 	if(exportLayers.length > 0)
 	{
 		ExportArtLayers(exportLayers, activeDocRef, destFolder);
-		alert("Export finish");
+		alert("Export finish.");
 	}
 	else
 	{
-		alert("Nothing export");
+		alert("Nothing export.");
 	}
 
 	app.activeDocument = activeDocRef;
@@ -81,6 +81,11 @@ function ExportArtLayers(artLayerList, hostDocRef, destFolder)
 
 			//解析参数
 			var context = GetProcessedArtLayerNineGridParams(originalLayer.name);
+
+			if(context.error)
+			{
+				alert(context.originalName + " process param error\n" + context.error);
+			}
 
 			rasterizedLayer = originalLayer.duplicate(originalLayer, ElementPlacement.PLACEAFTER);
 			rasterizedLayer.rasterize(RasterizeType.ENTIRELAYER);
@@ -177,6 +182,8 @@ function GetProcessedArtLayerNineGridParams(artLayerName)
 	context.processedName = artLayerName;
 	context.nineGridValid = false;
 
+	var error = undefined;
+
 	if(artLayerName.indexOf("@") > 0)
 	{
 		var valid = true;
@@ -189,6 +196,7 @@ function GetProcessedArtLayerNineGridParams(artLayerName)
 			paramArray = stringArray[1].split(":");
 			if(paramArray.length != 6)
 			{
+				error = "nine grid param count not 6.";
 				valid = false;
 			}
 			else
@@ -197,6 +205,7 @@ function GetProcessedArtLayerNineGridParams(artLayerName)
 				{
 					if(isNaN(Number(paramArray[i])))
 					{
+						error = "nine grid param not number.";
 						valid = false;
 						break;
 					}
@@ -205,8 +214,11 @@ function GetProcessedArtLayerNineGridParams(artLayerName)
 		}
 		catch(e)
 		{
+			error = "nine grid param process exception.\n" + e;
 			valid = false;
 		}
+
+		context.error = error;
 
 		if(valid)
 		{
