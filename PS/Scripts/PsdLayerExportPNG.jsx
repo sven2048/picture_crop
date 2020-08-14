@@ -1,4 +1,4 @@
-// @include 'PhotoShopUtils.js'
+// @include 'PhotoShopUtils.jsxinc'
 Main();
 
 function Main()
